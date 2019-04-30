@@ -1,10 +1,14 @@
-public class GeneticCode {
-    public int move; // moet list of moves worden
-    public GeneticCode(){
-        //new list of moves.
-    }
+import java.util.List;
 
+public class GeneticCode {
+    public List<Moves> Moves;
+    public GeneticCode(){
+        Moves= new List<Moves>;
+    }
 }
+
+//Lex, ik zie hierboven al vast : - )
+
 
 // VB code
 //    Public Class GeneticCode
