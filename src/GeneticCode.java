@@ -1,11 +1,22 @@
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneticCode {
-    public List<Moves> Moves;
+    public List<Moves> moves;
     public GeneticCode(){
-        Moves= new List<Moves>;
+        moves= new ArrayList<Moves>();
+    }
+    public static void main(String args[]){
+        GeneticCode NGC = new GeneticCode();
+        NGC.moves.add(Moves.Down);
+        NGC.moves.add(Moves.Up);
+        StdOut.println(NGC.moves);
+
     }
 }
+
 
 //Lex, ik zie hierboven al vast : - )
 
