@@ -3,6 +3,8 @@ public class Maze {
     public int sizeX;
     public int sizeY;
 
+    // Genereert een speelveld met go/no-go area's
+
     public Maze(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
