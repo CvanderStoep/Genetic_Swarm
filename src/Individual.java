@@ -1,10 +1,95 @@
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Vector;
+
+//TODO een echter vector class zoeken??
+//ik mis bijvoorbeeld vector.X
+
 public class Individual {
+    Vector startLocation;
+    Vector endLocation;
+    Vector targetLocation;
+    GeneticCode geneticCode;
+
+    //TODO hier maak ik wellicht een denkfout;
+    //gaan we Individual.geneticCode gebruiken ...
+    // of geven we die mee als paramater in Individual.updatePosition?
+
+
+    public Individual() {
+        this.startLocation = new Vector(0, 0);
+        this.targetLocation = new Vector(100, 100); //TODO Mazesize
+        this.geneticCode = new GeneticCode();
+        this.endLocation = this.startLocation;
+    }
+
+    public double fitness() {
+        return endLocation.distanceTo(targetLocation);
+    }
+
+    public void updatePosition(GeneticCode gc, Maze mz) {
+        this.endLocation = this.startLocation;
+        for (Moves mv : gc.moves) {
+            Vector oldEndLocation = endLocation;
+            //TODO dit is raar, de case switch geeft 3x een true???
+            switch (mv) {
+                case Up:
+                    endLocation = endLocation.plus(new Vector(0, 1));
+                    StdOut.println("Up"+ mv);
+                    break;
+                case Down:
+                    endLocation = endLocation.plus(new Vector(0, -1));
+                    StdOut.println("Down"+ mv);
+                    break;
+                case Left:
+                    endLocation = endLocation.plus(new Vector(-1, 0));
+                    StdOut.println("Left"+ mv);
+                    break;
+                case Right:
+                    endLocation = endLocation.plus(new Vector(1, 0));
+                    StdOut.println("Right"+ mv);
+                    break;
+            }
+            //TODO hier mis ik dus vector.xcoordinate!
+            int xCoorEnd = (int) endLocation.dot(new Vector(1, 0));
+            int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
+
+            if (!mz.isOpen(xCoorEnd,yCoordEnd)){
+                endLocation = oldEndLocation;
+            }
+        }
+    }
+
+    public void randomMutation(){
+        //TODO
+    }
+
+    public void crossOver(){
+        //TODO
+    }
+    public static void main(String args[]) {
+        Individual newI = new Individual();
+        GeneticCode ngc = new GeneticCode();
+        Maze mz = new Maze(3,3);
+        ngc.moves.add(Moves.Right);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        newI.geneticCode = ngc;
+        newI.updatePosition(ngc,mz);
+
+        StdOut.println(newI.startLocation);
+        StdOut.println(ngc.moves);
+        StdOut.println(newI.endLocation);
+        StdOut.println(newI.fitness());
+    }
+
 }
 
 
 // VB code
-//        Public Property Startlocation As Vector2
 //        Public Class Individual
+//        Public Property Startlocation As Vector2
 //        Public Property Endlocation As Vector2
 //        Public Property Targetlocation As Vector2
 //        Public Property GeneticCode As GeneticCode
