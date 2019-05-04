@@ -1,8 +1,12 @@
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Vector;
 
+import java.util.Random;
+
 //TODO een echter vector class zoeken??
 //ik mis bijvoorbeeld vector.X
+//dat wordt een Point2D!!
 
 public class Individual {
     Vector startLocation;
@@ -21,6 +25,12 @@ public class Individual {
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
     }
+//    Public Sub New()
+//        Me.Startlocation = New Vector2(0.2 * MazeSize, 0.2 * MazeSize)
+//        Me.Targetlocation = New Vector2(MazeSize - 1, MazeSize - 1)
+//        Me.GeneticCode = New GeneticCode
+//    End Sub
+
 
     public double fitness() {
         return endLocation.distanceTo(targetLocation);
@@ -30,28 +40,33 @@ public class Individual {
         this.endLocation = this.startLocation;
         for (Moves mv : gc.moves) {
             Vector oldEndLocation = endLocation;
-            //TODO dit is raar, de case switch geeft 3x een true???
+            //TODO dit is raar, de case switch geeft meerdere malen een true als je geen break gebruikt??
             switch (mv) {
                 case Up:
                     endLocation = endLocation.plus(new Vector(0, 1));
-                    StdOut.println("Up"+ mv);
+                    StdOut.println("Up: "+ mv);
                     break;
                 case Down:
                     endLocation = endLocation.plus(new Vector(0, -1));
-                    StdOut.println("Down"+ mv);
+                    StdOut.println("Down: "+ mv);
+                    break;
+                case None:
                     break;
                 case Left:
                     endLocation = endLocation.plus(new Vector(-1, 0));
-                    StdOut.println("Left"+ mv);
+                    StdOut.println("Left: "+ mv);
                     break;
                 case Right:
                     endLocation = endLocation.plus(new Vector(1, 0));
-                    StdOut.println("Right"+ mv);
+                    StdOut.println("Right: "+ mv);
                     break;
             }
             //TODO hier mis ik dus vector.xcoordinate!
             int xCoorEnd = (int) endLocation.dot(new Vector(1, 0));
             int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
+//            Point2D np = new Point2D(0,1);
+//            xCoorEnd = np.x();
+
 
             if (!mz.isOpen(xCoorEnd,yCoordEnd)){
                 endLocation = oldEndLocation;
@@ -60,106 +75,40 @@ public class Individual {
     }
 
     public void randomMutation(){
-        //TODO
+        GeneticCode mutatedCode = new GeneticCode();
+        Random rnd = new Random();
+
+        for (Moves mv : geneticCode.moves) {
+            int p = rnd.nextInt(100);
+            if(p<5){
+                int randomMove = rnd.nextInt(5);
+                switch (randomMove){
+                    case 0:
+                        mutatedCode.moves.add(Moves.None);
+                        break;
+                    case 1:
+                        mutatedCode.moves.add(Moves.Left);
+                        break;
+                    case 2:
+                        mutatedCode.moves.add(Moves.Right);
+                        break;
+                    case 3:
+                        mutatedCode.moves.add(Moves.Up);
+                        break;
+                    case 4:
+                        mutatedCode.moves.add(Moves.Down);
+                        break;
+                }
+            } else {
+                mutatedCode.moves.add(mv);
+            }
+        }
+        geneticCode = mutatedCode;
     }
 
     public void crossOver(){
         //TODO
     }
-    public static void main(String args[]) {
-        Individual newI = new Individual();
-        GeneticCode ngc = new GeneticCode();
-        Maze mz = new Maze(3,3);
-        ngc.moves.add(Moves.Right);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
-        newI.geneticCode = ngc;
-        newI.updatePosition(ngc,mz);
-
-        StdOut.println(newI.startLocation);
-        StdOut.println(ngc.moves);
-        StdOut.println(newI.endLocation);
-        StdOut.println(newI.fitness());
-    }
-
-}
-
-
-// VB code
-//        Public Class Individual
-//        Public Property Startlocation As Vector2
-//        Public Property Endlocation As Vector2
-//        Public Property Targetlocation As Vector2
-//        Public Property GeneticCode As GeneticCode
-//        Public Property Fitness As Double
-//        Get
-//        Fitness = Vector2.Distance(Endlocation, Targetlocation)
-//        End Get
-//        Set(value As Double)
-//        End Set
-//        End Property
-//        Public Sub New()
-//        Me.Startlocation = New Vector2(0.2 * MazeSize, 0.2 * MazeSize)
-//        Me.Targetlocation = New Vector2(MazeSize - 1, MazeSize - 1)
-//        Me.GeneticCode = New GeneticCode
-//        End Sub
-//        Public Sub UpdatePosition(geneticcode As GeneticCode, maze As Maze)
-//        Endlocation = Startlocation
-//        For Each move As Moves In geneticcode.Moves
-//        Dim OldEndlocation As Vector2 = Endlocation
-//        Select Case move
-//        Case Moves.Left
-//        Endlocation = Vector2.Add(New Vector2(-1, 0), Endlocation)
-//        Case Moves.Right
-//        Endlocation = Vector2.Add(New Vector2(1, 0), Endlocation)
-//        Case Moves.Up
-//        Endlocation = Vector2.Add(New Vector2(0, 1), Endlocation)
-//        Case Moves.Down
-//        Endlocation = Vector2.Add(New Vector2(0, -1), Endlocation)
-//        End Select
-//
-//        If Not maze.IsOpen(Endlocation.X, Endlocation.Y) Then
-//        Endlocation = OldEndlocation
-//        End If
-//        Next
-//        End Sub
-//        'Public Sub CalculateFitness()
-//        '    Dim fitness As Double = Vector2.Distance(Endlocation, Targetlocation)
-//        '    Me.Fitness = fitness
-//        'End Sub
-//        Public Sub RandomMutation()
-//        Dim MoveLocation As Integer = 0
-//        Dim MutationLocation As Integer = -1
-//        Dim p As Integer = random.Next(0, 100)
-//        Dim MutatedCode As New GeneticCode
-//
-//        For Each move As Moves In GeneticCode.Moves
-//        p = random.Next(0, 100)
-//        If p < 5 Then
-//        Dim randommove As Integer = random.Next(0, 5)
-//        MutatedCode.Moves.Add(randommove)
-//        Else
-//        MutatedCode.Moves.Add(move)
-//        End If
-//        Next
-//        GeneticCode = MutatedCode
-//
-//        ''TODO
-//        ''p wordt nog meegegeven als variable
-//        ''mutatie per gen ipv per individue nog uitwerken
-//        'If p < 5 Then
-//        '    Dim randomlocation As Integer = random.Next(0, NumberOfMoves)
-//        '    Dim randommove As Integer = random.Next(0, 5)
-//        '    GeneticCode.Moves.Item(randomlocation) = randommove
-//        '    'Console.WriteLine("mutated, p, mutationlocation: " & p & " " & randomlocation)
-//
-//        'End If
-//
-//
-//        End Sub
-//
 //        Public Function CrossOver(individual2 As Individual, crossoverpoint As Integer) As List(Of Individual)
 //        Dim child1, child2 As New Individual
 //        Dim ChildList As New List(Of Individual)
@@ -187,8 +136,26 @@ public class Individual {
 //
 //        Return ChildList
 //        End Function
-//
-//
-//
-//        End Class
-//
+
+
+    public static void main(String args[]) {
+        Individual newI = new Individual();
+        GeneticCode ngc = new GeneticCode();
+        Maze mz = new Maze(3,3);
+        ngc.moves.add(Moves.Right);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Moves.Up);
+        newI.geneticCode = ngc;
+        newI.updatePosition(ngc,mz);
+
+        StdOut.println(newI.startLocation);
+        StdOut.println(ngc.moves);
+        StdOut.println(newI.endLocation);
+        StdOut.println(newI.fitness());
+        newI.randomMutation();
+        StdOut.println(newI.geneticCode.moves);
+    }
+
+}
