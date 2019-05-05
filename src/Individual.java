@@ -1,7 +1,8 @@
-import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 //TODO een echter vector class zoeken??
@@ -13,10 +14,6 @@ public class Individual {
     Vector endLocation;
     Vector targetLocation;
     GeneticCode geneticCode;
-
-    //TODO hier maak ik wellicht een denkfout;
-    //gaan we Individual.geneticCode gebruiken ...
-    // of geven we die mee als paramater in Individual.updatePosition?
 
 
     public Individual() {
@@ -36,29 +33,29 @@ public class Individual {
         return endLocation.distanceTo(targetLocation);
     }
 
-    public void updatePosition(GeneticCode gc, Maze mz) {
+    public void updatePosition(Maze mz) {
         this.endLocation = this.startLocation;
-        for (Moves mv : gc.moves) {
+        for (Moves mv : geneticCode.moves) {
             Vector oldEndLocation = endLocation;
             //TODO dit is raar, de case switch geeft meerdere malen een true als je geen break gebruikt??
             switch (mv) {
                 case Up:
                     endLocation = endLocation.plus(new Vector(0, 1));
-                    StdOut.println("Up: "+ mv);
+                    StdOut.println("Up: " + mv);
                     break;
                 case Down:
                     endLocation = endLocation.plus(new Vector(0, -1));
-                    StdOut.println("Down: "+ mv);
+                    StdOut.println("Down: " + mv);
                     break;
                 case None:
                     break;
                 case Left:
                     endLocation = endLocation.plus(new Vector(-1, 0));
-                    StdOut.println("Left: "+ mv);
+                    StdOut.println("Left: " + mv);
                     break;
                 case Right:
                     endLocation = endLocation.plus(new Vector(1, 0));
-                    StdOut.println("Right: "+ mv);
+                    StdOut.println("Right: " + mv);
                     break;
             }
             //TODO hier mis ik dus vector.xcoordinate!
@@ -68,21 +65,21 @@ public class Individual {
 //            xCoorEnd = np.x();
 
 
-            if (!mz.isOpen(xCoorEnd,yCoordEnd)){
+            if (!mz.isOpen(xCoorEnd, yCoordEnd)) {
                 endLocation = oldEndLocation;
             }
         }
     }
 
-    public void randomMutation(){
+    public void randomMutation() {
         GeneticCode mutatedCode = new GeneticCode();
         Random rnd = new Random();
 
         for (Moves mv : geneticCode.moves) {
             int p = rnd.nextInt(100);
-            if(p<5){
+            if (p < 5) {
                 int randomMove = rnd.nextInt(5);
-                switch (randomMove){
+                switch (randomMove) {
                     case 0:
                         mutatedCode.moves.add(Moves.None);
                         break;
@@ -106,49 +103,43 @@ public class Individual {
         geneticCode = mutatedCode;
     }
 
-    public void crossOver(){
-        //TODO
+    public List<Individual> crossOver(Individual individual2, int crossOverPoint) {
+        Individual child1 = new Individual();
+        Individual child2 = new Individual();
+        List<Individual> childList = new ArrayList<>();
+        Moves nextMove1;
+        Moves nextMove2;
+        int nextMoveIndex = 0;
+        while (nextMoveIndex < this.geneticCode.moves.size()) {
+            nextMove1 = this.geneticCode.moves.get(nextMoveIndex);
+            nextMove2 = individual2.geneticCode.moves.get(nextMoveIndex);
+            if (nextMoveIndex < crossOverPoint) {
+                child1.geneticCode.moves.add(nextMove1);
+                child2.geneticCode.moves.add(nextMove2);
+            } else {
+                child2.geneticCode.moves.add(nextMove1);
+                child1.geneticCode.moves.add(nextMove2);
+            }
+            nextMoveIndex +=1;
+        }
+        child1.randomMutation();
+        childList.add(child1);
+        childList.add(child2);
+        return childList;
     }
-//        Public Function CrossOver(individual2 As Individual, crossoverpoint As Integer) As List(Of Individual)
-//        Dim child1, child2 As New Individual
-//        Dim ChildList As New List(Of Individual)
-//
-//        Dim NextMove1, NextMove2 As New Moves
-//
-//        Dim NextMoveIndex As Integer = 0
-//        Do While NextMoveIndex < Me.GeneticCode.Moves.Count
-//        NextMove1 = Me.GeneticCode.Moves.Item(NextMoveIndex)
-//        NextMove2 = individual2.GeneticCode.Moves.Item(NextMoveIndex)
-//        If NextMoveIndex < crossoverpoint Then
-//        child1.GeneticCode.Moves.Add(NextMove1)
-//        child2.GeneticCode.Moves.Add(NextMove2)
-//        Else
-//        child2.GeneticCode.Moves.Add(NextMove1)
-//        child1.GeneticCode.Moves.Add(NextMove2)
-//        End If
-//        NextMoveIndex += 1
-//        Loop
-//
-//        child1.RandomMutation()
-//
-//        ChildList.Add(child1)
-//        ChildList.Add(child2)
-//
-//        Return ChildList
-//        End Function
 
 
     public static void main(String args[]) {
         Individual newI = new Individual();
         GeneticCode ngc = new GeneticCode();
-        Maze mz = new Maze(3,3);
+        Maze mz = new Maze(3, 3);
         ngc.moves.add(Moves.Right);
         ngc.moves.add(Moves.Up);
         ngc.moves.add(Moves.Up);
         ngc.moves.add(Moves.Up);
         ngc.moves.add(Moves.Up);
         newI.geneticCode = ngc;
-        newI.updatePosition(ngc,mz);
+        newI.updatePosition(mz);
 
         StdOut.println(newI.startLocation);
         StdOut.println(ngc.moves);
@@ -156,6 +147,7 @@ public class Individual {
         StdOut.println(newI.fitness());
         newI.randomMutation();
         StdOut.println(newI.geneticCode.moves);
+        StdOut.println(ngc.moves.size());
     }
 
 }
