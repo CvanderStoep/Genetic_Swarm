@@ -41,21 +41,21 @@ public class Individual {
             switch (mv) {
                 case Up:
                     endLocation = endLocation.plus(new Vector(0, 1));
-                    StdOut.println("Up: " + mv);
+//                    StdOut.println("Up: " + mv);
                     break;
                 case Down:
                     endLocation = endLocation.plus(new Vector(0, -1));
-                    StdOut.println("Down: " + mv);
+//                    StdOut.println("Down: " + mv);
                     break;
                 case None:
                     break;
                 case Left:
                     endLocation = endLocation.plus(new Vector(-1, 0));
-                    StdOut.println("Left: " + mv);
+//                    StdOut.println("Left: " + mv);
                     break;
                 case Right:
                     endLocation = endLocation.plus(new Vector(1, 0));
-                    StdOut.println("Right: " + mv);
+//                    StdOut.println("Right: " + mv);
                     break;
             }
             //TODO hier mis ik dus vector.xcoordinate!
