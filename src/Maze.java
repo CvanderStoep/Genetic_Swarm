@@ -1,15 +1,16 @@
+import edu.princeton.cs.algs4.StdOut;
+
+import java.util.List;
+
 public class Maze {
     private boolean[][] field;
     public int sizeX;
     public int sizeY;
 
-
     public Maze(int nX, int nY) {
         this.sizeX = nX;
         this.sizeY = nY;
-
         field = new boolean[nX][nY];
-
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {
                 field[i][j] = true;
@@ -24,7 +25,6 @@ public class Maze {
         if (i >= sizeX || j >= sizeY) {
             return false;
         }
-
         return field[i][j];
     }
 
@@ -33,6 +33,14 @@ public class Maze {
             field[i][j] = isOpen;
         } else {
             throw new IllegalArgumentException("The indices given (" + i + "," + j + ") were out of bounds.");
+        }
+    }
+
+    public void plot(List<Individual> individuals) {
+        StdOut.println("plotting...");
+        for (Individual in : individuals) {
+            StdOut.println("fitness: " + in.fitness());
+            StdOut.println(in.geneticCode.moves);
         }
     }
 }
