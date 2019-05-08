@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.List;
@@ -43,5 +45,30 @@ public class Maze {
             StdOut.println("fitness: " + in.fitness());
             StdOut.println(in.geneticCode.moves);
         }
+
+
+        // read in bounding box and rescale
+        double x0 = 0;
+        double y0 = 0;
+        double x1 = 300;
+        double y1 = 300;
+        StdDraw.setXscale(x0, x1);
+        StdDraw.setYscale(y0, y1);
+        StdDraw.clear();
+
+        StdDraw.enableDoubleBuffering();
+
+        StdDraw.setPenRadius(0.005);
+        StdDraw.filledCircle(20,20,5);
+        StdDraw.point(50,50);
+        String outputText = String.format("%.2f",individuals.get(0).fitness());
+        StdDraw.text(60,60,outputText);
+
+
+        // display all of the points now
+        StdDraw.show();
+
+
+
     }
 }
