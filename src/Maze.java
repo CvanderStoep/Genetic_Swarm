@@ -37,6 +37,7 @@ public class Maze {
     }
 
     public void plot(List<Individual> individuals) {
+        //TODO design plotting output
         StdOut.println("plotting...");
         for (Individual in : individuals) {
             StdOut.println("fitness: " + in.fitness());

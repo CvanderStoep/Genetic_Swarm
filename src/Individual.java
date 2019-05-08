@@ -17,8 +17,8 @@ public class Individual {
 
 
     public Individual() {
-        this.startLocation = new Vector(0, 0);
-        this.targetLocation = new Vector(100, 100); //TODO Mazesize
+        this.startLocation = new Vector(4, 4);
+        this.targetLocation = new Vector(9, 9); //TODO Mazesize
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
     }
@@ -37,7 +37,6 @@ public class Individual {
         this.endLocation = this.startLocation;
         for (Moves mv : geneticCode.moves) {
             Vector oldEndLocation = endLocation;
-            //TODO dit is raar, de case switch geeft meerdere malen een true als je geen break gebruikt??
             switch (mv) {
                 case Up:
                     endLocation = endLocation.plus(new Vector(0, 1));
@@ -58,7 +57,6 @@ public class Individual {
 //                    StdOut.println("Right: " + mv);
                     break;
             }
-            //TODO hier mis ik dus vector.xcoordinate!
             int xCoorEnd = (int) endLocation.dot(new Vector(1, 0));
             int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
 //            Point2D np = new Point2D(0,1);

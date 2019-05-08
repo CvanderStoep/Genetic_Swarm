@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
@@ -7,10 +8,12 @@ import java.util.Random;
 
 
 public class Simulation {
-    int numberOfIndividuals = 8;
-    int numberOfMoves = 10;
+    int numberOfIndividuals = 98;
+    int numberOfMoves = 25;
+    int mazeSize = 10;
+
     List<Individual> individuals = new ArrayList<>();
-    Maze mz = new Maze(3, 3);
+    Maze mz = new Maze(mazeSize,mazeSize);
 
     public static void main(String args[]) {
         StdOut.println("started: ");
@@ -18,21 +21,16 @@ public class Simulation {
         newSimulation.Initialize();
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
-//        for (Individual in: newSimulation.individuals){
-//            StdOut.println("fitness: " + in.fitness());
-//            StdOut.println(in.geneticCode.moves);
-//        }
-        newSimulation.mz.plot(newSimulation.individuals);
-        for (int i = 0; i < 4; i++) {
+//        newSimulation.mz.plot(newSimulation.individuals);
+
+        for (int i = 0; i < 10; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
             StdOut.println("killed 1/2: ");
+//            newSimulation.mz.plot(newSimulation.individuals);
+            newSimulation.CrossOver();
+            newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
+            StdOut.println("crossover: ");
             newSimulation.mz.plot(newSimulation.individuals);
-
-// done           Individuals.RemoveRange(NumberOfIndividuals / 2, NumberOfIndividuals / 2)
-//            CrossOver(NewMaze)
-//            Individuals.Sort(Function(x, y) x.Fitness.CompareTo(y.Fitness))
-//            MazeOutput.Draw(i, Individuals.First.Fitness, NewMaze)
-
         }
     }
 
@@ -65,6 +63,29 @@ public class Simulation {
             individual.geneticCode = geneticCode;
             individual.updatePosition(mz);
 //            StdOut.println("fitness: " + i + " "+ individual.fitness());
+        }
+    }
+
+    public void CrossOver() {
+        int nextIndividual = 0;
+        Random rnd = new Random();
+
+        while (nextIndividual < numberOfIndividuals / 2) {
+            int randomCrossOverPoint = rnd.nextInt(numberOfMoves) + 1;
+            StdOut.println("crossoverpoint: " + randomCrossOverPoint);
+            Individual in1 = new Individual();
+            Individual in2 = new Individual();
+            List<Individual> childList = new ArrayList<>();
+            in1 = individuals.get(nextIndividual);
+            in2 = individuals.get(nextIndividual + 1);
+            childList = in1.crossOver(in2, randomCrossOverPoint);
+            for (Individual child : childList) {
+                individuals.add(child);
+            }
+            nextIndividual += 2;
+        }
+        for (Individual individual: individuals){
+            individual.updatePosition(mz);
         }
     }
 }
