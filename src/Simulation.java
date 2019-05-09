@@ -38,31 +38,9 @@ public class Simulation {
         Random rnd = new Random();
         for (int i = 0; i < numberOfIndividuals; i++) {
             Individual individual = new Individual();
-            GeneticCode geneticCode = new GeneticCode();
-            individuals.add(individual);
-            for (int j = 0; j < numberOfMoves; j++) {
-                int randomMove = rnd.nextInt(5);
-                switch (randomMove) {
-                    case 0:
-                        geneticCode.moves.add(Moves.None);
-                        break;
-                    case 1:
-                        geneticCode.moves.add(Moves.Left);
-                        break;
-                    case 2:
-                        geneticCode.moves.add(Moves.Right);
-                        break;
-                    case 3:
-                        geneticCode.moves.add(Moves.Up);
-                        break;
-                    case 4:
-                        geneticCode.moves.add(Moves.Down);
-                        break;
-                }
-            }
-            individual.geneticCode = geneticCode;
+            individual.geneticCode = GeneticCode.generateRandomCode(numberOfMoves);
             individual.updatePosition(mz);
-//            StdOut.println("fitness: " + i + " "+ individual.fitness());
+            individuals.add(individual);
         }
     }
 
