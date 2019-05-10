@@ -21,6 +21,10 @@ public class Simulation {
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
+        for (int i = 5;i<10;i++){
+            for (int j = 5;j<10;j++)
+            newSimulation.mz.setOpen(i,j,false);
+        }
 
         for (int i = 0; i < 100; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
