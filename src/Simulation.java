@@ -1,4 +1,3 @@
-import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
@@ -8,9 +7,9 @@ import java.util.Random;
 
 
 public class Simulation {
-    int numberOfIndividuals = 98;
-    int numberOfMoves = 25;
-    int mazeSize = 10;
+    int numberOfIndividuals = 128;
+    int numberOfMoves = 50;
+    int mazeSize = 20;
 
     List<Individual> individuals = new ArrayList<>();
     Maze mz = new Maze(mazeSize,mazeSize);
@@ -23,7 +22,7 @@ public class Simulation {
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
             StdOut.println("killed 1/2: ");
 //            newSimulation.mz.plot(newSimulation.individuals);
@@ -31,6 +30,11 @@ public class Simulation {
             newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
             StdOut.println("crossover: ");
             newSimulation.mz.plot(newSimulation.individuals);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -50,7 +54,7 @@ public class Simulation {
 
         while (nextIndividual < numberOfIndividuals / 2) {
             int randomCrossOverPoint = rnd.nextInt(numberOfMoves) + 1;
-            StdOut.println("crossoverpoint: " + randomCrossOverPoint);
+//            StdOut.println("crossoverpoint: " + randomCrossOverPoint);
             Individual in1 = new Individual();
             Individual in2 = new Individual();
             List<Individual> childList = new ArrayList<>();
