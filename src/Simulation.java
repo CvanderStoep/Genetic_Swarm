@@ -10,9 +10,10 @@ public class Simulation {
     int numberOfIndividuals = 128;
     int numberOfMoves = 50;
     int mazeSize = 20;
+    int numberOfSimulations = 50;
 
     List<Individual> individuals = new ArrayList<>();
-    Maze mz = new Maze(mazeSize,mazeSize);
+    Maze mz = new Maze(mazeSize, mazeSize);
 
     public static void main(String args[]) {
         StdOut.println("started: ");
@@ -21,12 +22,13 @@ public class Simulation {
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
-        for (int i = 5;i<10;i++){
-            for (int j = 5;j<10;j++)
-            newSimulation.mz.setOpen(i,j,false);
+        for (int i = 5; i < 10; i++) {
+            for (int j = 5; j < 10; j++) {
+                newSimulation.mz.setOpen(i, j, false);
+            }
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < newSimulation.numberOfSimulations; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
             StdOut.println("killed 1/2: ");
 //            newSimulation.mz.plot(newSimulation.individuals);
@@ -70,7 +72,7 @@ public class Simulation {
             }
             nextIndividual += 2;
         }
-        for (Individual individual: individuals){
+        for (Individual individual : individuals) {
             individual.updatePosition(mz);
         }
     }
