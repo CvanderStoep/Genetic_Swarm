@@ -18,7 +18,7 @@ public class Individual {
 
     public Individual() {
         this.startLocation = new Vector(4, 4);
-        this.targetLocation = new Vector(19, 19); //TODO Mazesize
+        this.targetLocation = new Vector(19, 19); //TODO Mazesize as input
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
     }

@@ -30,12 +30,13 @@ public class Simulation {
 
         for (int i = 0; i < newSimulation.numberOfSimulations; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
+            StdOut.println("generation: " + i);
             StdOut.println("killed 1/2: ");
 //            newSimulation.mz.plot(newSimulation.individuals);
             newSimulation.CrossOver();
             newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
             StdOut.println("crossover: ");
-            newSimulation.mz.plot(newSimulation.individuals);
+            newSimulation.mz.plot(newSimulation.individuals, i);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

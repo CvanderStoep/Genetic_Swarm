@@ -40,8 +40,8 @@ public class Maze {
         }
     }
 
-    public void plot(List<Individual> individuals) {
-        //TODO design plotting output
+    public void plot(List<Individual> individuals, int generation) {
+        //TODO design plotting output to scale with mazesize
         StdOut.println("plotting...");
 
 
@@ -81,8 +81,9 @@ public class Maze {
         }
 
         StdDraw.setPenColor(Color.black);
-        String outputText = String.format("%.2f", individuals.get(0).fitness());
+        String outputText = String.format("fitness: " + "%.2f", individuals.get(0).fitness());
         StdDraw.text(25, 25, outputText);
+        StdDraw.text(25, 26, String.format("generation: " + "%d", generation));
 
         StdDraw.setPenColor(Color.red);
         for (int i = 0; i < sizeX; i++) {
