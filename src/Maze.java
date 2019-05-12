@@ -48,26 +48,35 @@ public class Maze {
         // read in bounding box and rescale
         double x0 = 0;
         double y0 = 0;
-        double x1 = 30;
-        double y1 = 30;
+        double x1 = sizeX + 5;
+        double y1 = sizeY + 5;
         StdDraw.setXscale(x0, x1);
         StdDraw.setYscale(y0, y1);
         StdDraw.clear();
 
         StdDraw.enableDoubleBuffering();
 
-        StdDraw.setPenRadius(0.005);
-//        StdDraw.filledCircle(20,20,5);
-//        StdDraw.point(50,50);
+        StdDraw.setPenRadius(0.0005);
         StdDraw.setPenColor();
         for (Individual in : individuals) {
-//            StdOut.println("fitness: " + in.fitness());
-//            StdOut.println(in.geneticCode.moves);
 
             int xCoorStart = (int) in.startLocation.dot(new Vector(1, 0));
             int yCoordStart = (int) in.startLocation.dot(new Vector(0, 1));
             StdDraw.setPenColor(Color.blue);
             StdDraw.filledCircle(xCoorStart,yCoordStart,0.2);
+
+            //TODO draw line between 2 consecutive points in the trajectory
+//            int x00 = xCoorStart;
+//            int y00 = yCoordStart;
+            for (Vector cp: in.trajectoryOfPositions){
+                int xcp = (int) cp.dot(new Vector(1, 0));
+                int ycp = (int) cp.dot(new Vector(0, 1));
+                StdDraw.setPenColor(Color.blue);
+//                StdDraw.filledCircle(xcp,ycp,0.1);
+                StdDraw.line(xCoorStart,yCoordStart,xcp,ycp);
+                xCoorStart = xcp;
+                yCoordStart = ycp;
+            }
 
             int xCoorEnd = (int) in.endLocation.dot(new Vector(1, 0));
             int yCoordEnd = (int) in.endLocation.dot(new Vector(0, 1));
@@ -82,8 +91,8 @@ public class Maze {
 
         StdDraw.setPenColor(Color.black);
         String outputText = String.format("fitness: " + "%.2f", individuals.get(0).fitness());
-        StdDraw.text(25, 25, outputText);
-        StdDraw.text(25, 26, String.format("generation: " + "%d", generation));
+        StdDraw.text(sizeX, sizeY, outputText);
+        StdDraw.text(sizeX, sizeY+1, String.format("generation: " + "%d", generation));
 
         StdDraw.setPenColor(Color.red);
         for (int i = 0; i < sizeX; i++) {

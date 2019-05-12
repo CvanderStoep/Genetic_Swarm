@@ -7,8 +7,8 @@ import java.util.Random;
 
 
 public class Simulation {
-    private final int NUMBER_OF_INDIVIDUALS = 128;
-    private final int NUMBER_OF_MOVES = 50;
+    private final int NUMBER_OF_INDIVIDUALS = 128; //128
+    private final int NUMBER_OF_MOVES = 50;//50
     private final int MAZE_SIZE = 20;
     private final int NUMBER_OF_SIMULATIONS = 50;
 

@@ -14,13 +14,15 @@ public class Individual {
     Vector endLocation;
     Vector targetLocation;
     GeneticCode geneticCode;
+    List<Vector> trajectoryOfPositions;
 
 
     public Individual() {
-        this.startLocation = new Vector(4, 4);
-        this.targetLocation = new Vector(19, 19); //TODO Mazesize as input
+        this.startLocation = new Vector(4,4);
+        this.targetLocation = new Vector(19,19); //TODO Mazesize as input
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
+        this.trajectoryOfPositions = new ArrayList<>();
     }
 //    Public Sub New()
 //        Me.Startlocation = New Vector2(0.2 * MazeSize, 0.2 * MazeSize)
@@ -35,6 +37,8 @@ public class Individual {
 
     public void updatePosition(Maze mz) {
         this.endLocation = this.startLocation;
+        trajectoryOfPositions.clear();
+        trajectoryOfPositions.add(startLocation);
         for (Moves mv : geneticCode.moves) {
             Vector oldEndLocation = endLocation;
             switch (mv) {
@@ -61,11 +65,10 @@ public class Individual {
             int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
 //            Point2D np = new Point2D(0,1);
 //            xCoorEnd = np.x();
-
-
             if (!mz.isOpen(xCoorEnd, yCoordEnd)) {
                 endLocation = oldEndLocation;
             }
+            trajectoryOfPositions.add(endLocation);
         }
     }
 
