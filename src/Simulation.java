@@ -7,18 +7,26 @@ import java.util.Random;
 
 
 public class Simulation {
-    int numberOfIndividuals = 128;
-    int numberOfMoves = 50;
-    int mazeSize = 20;
-    int numberOfSimulations = 50;
+    private final int NUMBER_OF_INDIVIDUALS = 128;
+    private final int NUMBER_OF_MOVES = 50;
+    private final int MAZE_SIZE = 20;
+    private final int NUMBER_OF_SIMULATIONS = 50;
 
-    List<Individual> individuals = new ArrayList<>();
-    Maze mz = new Maze(mazeSize, mazeSize);
+    private List<Individual> individuals = new ArrayList<>();
+    private Maze mz = new Maze(MAZE_SIZE, MAZE_SIZE);
+
+    public Simulation(){
+        for (int i = 0; i < NUMBER_OF_INDIVIDUALS; i++) {
+            Individual individual = new Individual();
+            individual.geneticCode = GeneticCode.generateRandomCode(NUMBER_OF_MOVES);
+            individual.updatePosition(mz);
+            individuals.add(individual);
+        }
+    }
 
     public static void main(String args[]) {
         StdOut.println("started: ");
         Simulation newSimulation = new Simulation();
-        newSimulation.Initialize();
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
@@ -28,7 +36,7 @@ public class Simulation {
             }
         }
 
-        for (int i = 0; i < newSimulation.numberOfSimulations; i++) {
+        for (int i = 0; i < newSimulation.NUMBER_OF_SIMULATIONS; i++) {
             newSimulation.individuals.subList(newSimulation.individuals.size() / 2, newSimulation.individuals.size()).clear();
             StdOut.println("generation: " + i);
             StdOut.println("killed 1/2: ");
@@ -45,32 +53,16 @@ public class Simulation {
         }
     }
 
-    public void Initialize() {
-        Random rnd = new Random();
-        for (int i = 0; i < numberOfIndividuals; i++) {
-            Individual individual = new Individual();
-            individual.geneticCode = GeneticCode.generateRandomCode(numberOfMoves);
-            individual.updatePosition(mz);
-            individuals.add(individual);
-        }
-    }
-
-    public void CrossOver() {
+    private void CrossOver() {
         int nextIndividual = 0;
         Random rnd = new Random();
 
-        while (nextIndividual < numberOfIndividuals / 2) {
-            int randomCrossOverPoint = rnd.nextInt(numberOfMoves) + 1;
-//            StdOut.println("crossoverpoint: " + randomCrossOverPoint);
-            Individual in1 = new Individual();
-            Individual in2 = new Individual();
-            List<Individual> childList = new ArrayList<>();
-            in1 = individuals.get(nextIndividual);
-            in2 = individuals.get(nextIndividual + 1);
-            childList = in1.crossOver(in2, randomCrossOverPoint);
-            for (Individual child : childList) {
-                individuals.add(child);
-            }
+        while (nextIndividual < NUMBER_OF_INDIVIDUALS / 2) {
+            int randomCrossOverPoint = rnd.nextInt(NUMBER_OF_MOVES) + 1;
+            Individual in1 = individuals.get(nextIndividual);
+            Individual in2 = individuals.get(nextIndividual + 1);
+            List<Individual> childList = in1.crossOver(in2, randomCrossOverPoint);
+            individuals.addAll(childList);
             nextIndividual += 2;
         }
         for (Individual individual : individuals) {
