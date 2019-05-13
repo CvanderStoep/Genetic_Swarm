@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GeneticCode {
-    private static Random rnd = new Random();
+    private static final Random rnd = new Random();
     public List<Moves> moves;
 
     public GeneticCode() {
