@@ -21,15 +21,12 @@ public class Input {
         frame.setVisible(true);
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 
     private class RunClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            inpMazeSize.setText("123");
-            Simulation.main(new String[]{"1"});
+            inpMazeSize.setText("doet nog niets");
+//            Simulation.main(new String[]{"doet niets"});
         }
     }
 }
