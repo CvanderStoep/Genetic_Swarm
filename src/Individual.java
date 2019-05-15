@@ -21,7 +21,7 @@ public class Individual {
 
 
     public Individual(int mazesize) {
-        this.startLocation = new Vector((int) (0.1*mazesize), (int) (0.1*mazesize));
+        this.startLocation = new Vector(1,1);
         this.sL = new Point2D(4, 4);
         this.targetLocation = new Vector(mazesize-1, mazesize -1);
         this.geneticCode = new GeneticCode();
