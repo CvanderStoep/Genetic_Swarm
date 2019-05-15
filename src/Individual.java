@@ -44,28 +44,10 @@ public class Individual {
         this.endLocation = this.startLocation;
         trajectoryOfPositions.clear();
         trajectoryOfPositions.add(startLocation);
-        for (Moves mv : geneticCode.moves) {
+        for (Move mv : geneticCode.moves) {
             Vector oldEndLocation = endLocation;
-            switch (mv) {
-                case Up:
-                    endLocation = endLocation.plus(new Vector(0, 1));
-//                    StdOut.println("Up: " + mv);
-                    break;
-                case Down:
-                    endLocation = endLocation.plus(new Vector(0, -1));
-//                    StdOut.println("Down: " + mv);
-                    break;
-                case None:
-                    break;
-                case Left:
-                    endLocation = endLocation.plus(new Vector(-1, 0));
-//                    StdOut.println("Left: " + mv);
-                    break;
-                case Right:
-                    endLocation = endLocation.plus(new Vector(1, 0));
-//                    StdOut.println("Right: " + mv);
-                    break;
-            }
+            endLocation = endLocation.plus(mv.direction);
+
             int xCoorEnd = (int) endLocation.dot(new Vector(1, 0));
             int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
 //            Point2D np = new Point2D(0,1);
@@ -82,27 +64,10 @@ public class Individual {
         GeneticCode mutatedCode = new GeneticCode();
         Random rnd = new Random();
 
-        for (Moves mv : geneticCode.moves) {
+        for (Move mv : geneticCode.moves) {
             int p = rnd.nextInt(100);
             if (p < 5) {
-                int randomMove = rnd.nextInt(5);
-                switch (randomMove) {
-                    case 0:
-                        mutatedCode.moves.add(Moves.None);
-                        break;
-                    case 1:
-                        mutatedCode.moves.add(Moves.Left);
-                        break;
-                    case 2:
-                        mutatedCode.moves.add(Moves.Right);
-                        break;
-                    case 3:
-                        mutatedCode.moves.add(Moves.Up);
-                        break;
-                    case 4:
-                        mutatedCode.moves.add(Moves.Down);
-                        break;
-                }
+                mutatedCode.moves.add(Move.getRandomMove());
             } else {
                 mutatedCode.moves.add(mv);
             }
@@ -114,8 +79,8 @@ public class Individual {
         Individual child1 = new Individual(mazeSize);
         Individual child2 = new Individual(mazeSize);
         List<Individual> childList = new ArrayList<>();
-        Moves nextMove1;
-        Moves nextMove2;
+        Move nextMove1;
+        Move nextMove2;
         int nextMoveIndex = 0;
         while (nextMoveIndex < this.geneticCode.moves.size()) {
             nextMove1 = this.geneticCode.moves.get(nextMoveIndex);
@@ -140,11 +105,11 @@ public class Individual {
         Individual newI = new Individual(3);
         GeneticCode ngc = new GeneticCode();
         Maze mz = new Maze(3, 3);
-        ngc.moves.add(Moves.Right);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
-        ngc.moves.add(Moves.Up);
+        ngc.moves.add(Move.Right);
+        ngc.moves.add(Move.Up);
+        ngc.moves.add(Move.Up);
+        ngc.moves.add(Move.Up);
+        ngc.moves.add(Move.Up);
         newI.geneticCode = ngc;
         newI.updatePosition(mz);
 
