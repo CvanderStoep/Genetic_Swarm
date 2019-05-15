@@ -24,7 +24,7 @@ public class Simulation {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         StdOut.println("started: ");
         Simulation newSimulation = new Simulation();
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
@@ -57,6 +57,7 @@ public class Simulation {
             }
         }
     }
+
 
     private void CrossOver() {
         int nextIndividual = 0;
