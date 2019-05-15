@@ -41,7 +41,6 @@ public class Maze {
     }
 
     public void plot(List<Individual> individuals, int generation) {
-        //TODO design plotting output to scale with mazesize
         StdOut.println("plotting...");
 
 
@@ -65,9 +64,6 @@ public class Maze {
             StdDraw.setPenColor(Color.blue);
             StdDraw.filledCircle(xCoorStart,yCoordStart,0.2);
 
-            //TODO draw line between 2 consecutive points in the trajectory
-//            int x00 = xCoorStart;
-//            int y00 = yCoordStart;
             for (Vector cp: in.trajectoryOfPositions){
                 int xcp = (int) cp.dot(new Vector(1, 0));
                 int ycp = (int) cp.dot(new Vector(0, 1));

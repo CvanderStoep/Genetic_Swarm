@@ -9,15 +9,15 @@ import java.util.Random;
 public class Simulation {
     private final int NUMBER_OF_INDIVIDUALS = 128; //128
     private final int NUMBER_OF_MOVES = 50;//50
-    private final int MAZE_SIZE = 20;
-    private final int NUMBER_OF_SIMULATIONS = 50;
+    private final int MAZE_SIZE = 20; //20
+    private final int NUMBER_OF_SIMULATIONS = 100;
 
     private List<Individual> individuals = new ArrayList<>();
     private Maze mz = new Maze(MAZE_SIZE, MAZE_SIZE);
 
     public Simulation(){
         for (int i = 0; i < NUMBER_OF_INDIVIDUALS; i++) {
-            Individual individual = new Individual();
+            Individual individual = new Individual(MAZE_SIZE);
             individual.geneticCode = GeneticCode.generateRandomCode(NUMBER_OF_MOVES);
             individual.updatePosition(mz);
             individuals.add(individual);
@@ -46,7 +46,7 @@ public class Simulation {
             StdOut.println("crossover: ");
             newSimulation.mz.plot(newSimulation.individuals, i);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

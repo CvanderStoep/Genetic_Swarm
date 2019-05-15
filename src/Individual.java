@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Vector;
 
@@ -11,18 +12,22 @@ import java.util.Random;
 
 public class Individual {
     Vector startLocation;
+    Point2D sL;
     Vector endLocation;
     Vector targetLocation;
     GeneticCode geneticCode;
     List<Vector> trajectoryOfPositions;
+    int mazeSize;
 
 
-    public Individual() {
-        this.startLocation = new Vector(4,4);
-        this.targetLocation = new Vector(19,19); //TODO Mazesize as input
+    public Individual(int mazesize) {
+        this.startLocation = new Vector((int) (0.1*mazesize), (int) (0.1*mazesize));
+        this.sL = new Point2D(4, 4);
+        this.targetLocation = new Vector(mazesize-1, mazesize -1);
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
         this.trajectoryOfPositions = new ArrayList<>();
+        this.mazeSize = mazesize;
     }
 //    Public Sub New()
 //        Me.Startlocation = New Vector2(0.2 * MazeSize, 0.2 * MazeSize)
@@ -65,6 +70,7 @@ public class Individual {
             int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
 //            Point2D np = new Point2D(0,1);
 //            xCoorEnd = np.x();
+
             if (!mz.isOpen(xCoorEnd, yCoordEnd)) {
                 endLocation = oldEndLocation;
             }
@@ -105,8 +111,8 @@ public class Individual {
     }
 
     public List<Individual> crossOver(Individual individual2, int crossOverPoint) {
-        Individual child1 = new Individual();
-        Individual child2 = new Individual();
+        Individual child1 = new Individual(mazeSize);
+        Individual child2 = new Individual(mazeSize);
         List<Individual> childList = new ArrayList<>();
         Moves nextMove1;
         Moves nextMove2;
@@ -121,7 +127,7 @@ public class Individual {
                 child2.geneticCode.moves.add(nextMove1);
                 child1.geneticCode.moves.add(nextMove2);
             }
-            nextMoveIndex +=1;
+            nextMoveIndex += 1;
         }
         child1.randomMutation();
         childList.add(child1);
@@ -131,7 +137,7 @@ public class Individual {
 
 
     public static void main(String args[]) {
-        Individual newI = new Individual();
+        Individual newI = new Individual(3);
         GeneticCode ngc = new GeneticCode();
         Maze mz = new Maze(3, 3);
         ngc.moves.add(Moves.Right);
