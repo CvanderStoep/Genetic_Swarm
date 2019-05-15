@@ -30,7 +30,12 @@ public class Simulation {
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
-        for (int i = 5; i < 20; i++) {
+        for (int i = 5; i < 10; i++) {
+            for (int j = 5; j < 10; j++) {
+                newSimulation.mz.setOpen(i, j, false);
+            }
+        }
+        for (int i = 15; i < 20; i++) {
             for (int j = 5; j < 10; j++) {
                 newSimulation.mz.setOpen(i, j, false);
             }
