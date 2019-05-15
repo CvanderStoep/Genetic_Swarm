@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Simulation {
     private final int NUMBER_OF_INDIVIDUALS = 128; //128
-    private final int NUMBER_OF_MOVES = 50;//50
-    private final int MAZE_SIZE = 20; //20
+    private final int NUMBER_OF_MOVES = 100;//50
+    private final int MAZE_SIZE = 50; //20
     private final int NUMBER_OF_SIMULATIONS = 100;
 
     private List<Individual> individuals = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Simulation {
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
 //        newSimulation.mz.plot(newSimulation.individuals);
-        for (int i = 5; i < 10; i++) {
+        for (int i = 5; i < 20; i++) {
             for (int j = 5; j < 10; j++) {
                 newSimulation.mz.setOpen(i, j, false);
             }
