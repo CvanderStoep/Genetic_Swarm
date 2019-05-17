@@ -7,6 +7,9 @@ public class Input {
     private JButton btnRun;
     private JPanel InputView;
     private JLabel lblMazeSize;
+    private JTextField inpNumberIndividuals;
+    private JTextField inpNumberMoves;
+    private JTextField inpNumberSimulations;
 
     public Input() {
         btnRun.addActionListener(new RunClicked());
@@ -25,9 +28,9 @@ public class Input {
     private class RunClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            inpMazeSize.setText("doet nog niets");
             new Thread(() -> {
-                Simulation.main(new String[]{"doet niets nuttigs"});
+                Simulation.main(new String[]{inpMazeSize.getText(), inpNumberIndividuals.getText(),
+                        inpNumberMoves.getText(), inpNumberSimulations.getText()});
             }).start();
         }
     }

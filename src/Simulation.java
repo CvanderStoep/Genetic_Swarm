@@ -7,23 +7,23 @@ import java.util.Random;
 
 
 public class Simulation {
-    private int NUMBER_OF_MOVES;// = 100;//50
+    private int numberOfMoves;// = 100;//50
     //    private final int NUMBER_OF_SIMULATIONS = 100;
-    private int NUMBER_OF_INDIVIDUALS;// = 128; //128
-    private int MAZE_SIZE; // = 50; //20
+    private int numberOfIndividuals;// = 128; //128
+    private int mazeSize; // = 50; //20
     private List<Individual> individuals = new ArrayList<>();
-    private Maze mz;// = new Maze(MAZE_SIZE, MAZE_SIZE);
+    private Maze mz;// = new Maze(mazeSize, mazeSize);
 
     public Simulation(int mazesize, int numberofindividuals, int numberofmoves) {
-        this.MAZE_SIZE = mazesize;
-        this.mz = new Maze(MAZE_SIZE, MAZE_SIZE);
-        this.NUMBER_OF_INDIVIDUALS = numberofindividuals;
-        this.NUMBER_OF_MOVES = numberofmoves;
+        this.mazeSize = mazesize;
+        this.mz = new Maze(mazeSize, mazeSize);
+        this.numberOfIndividuals = numberofindividuals;
+        this.numberOfMoves = numberofmoves;
 
 
-        for (int i = 0; i < NUMBER_OF_INDIVIDUALS; i++) {
-            Individual individual = new Individual(MAZE_SIZE);
-            individual.geneticCode = GeneticCode.generateRandomCode(NUMBER_OF_MOVES);
+        for (int i = 0; i < numberOfIndividuals; i++) {
+            Individual individual = new Individual(mazeSize);
+            individual.geneticCode = GeneticCode.generateRandomCode(numberOfMoves);
             individual.updatePosition(mz);
             individuals.add(individual);
         }
@@ -31,10 +31,11 @@ public class Simulation {
 
     public static void main(String[] args) {
         StdOut.println("started: ");
-        int mazesize = 50;
-        int numberofindividuals = 128;
-        int numberofmoves = 100;
-        int numberofsimulations = 100;
+        int mazesize = (Integer.valueOf(args[0])).intValue();
+        int numberofindividuals = (Integer.valueOf(args[1])).intValue();
+        int numberofmoves = (Integer.valueOf(args[2])).intValue();
+        int numberofsimulations = (Integer.valueOf(args[3])).intValue();
+
         Simulation newSimulation = new Simulation(mazesize, numberofindividuals, numberofmoves);
         newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
         StdOut.println("sorted: ");
@@ -73,8 +74,8 @@ public class Simulation {
         int nextIndividual = 0;
         Random rnd = new Random();
 
-        while (nextIndividual < NUMBER_OF_INDIVIDUALS / 2) {
-            int randomCrossOverPoint = rnd.nextInt(NUMBER_OF_MOVES) + 1;
+        while (nextIndividual < numberOfIndividuals / 2) {
+            int randomCrossOverPoint = rnd.nextInt(numberOfMoves) + 1;
             Individual in1 = individuals.get(nextIndividual);
             Individual in2 = individuals.get(nextIndividual + 1);
             List<Individual> childList = in1.crossOver(in2, randomCrossOverPoint);
