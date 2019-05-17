@@ -26,7 +26,9 @@ public class Input {
         @Override
         public void actionPerformed(ActionEvent e) {
             inpMazeSize.setText("doet nog niets");
-            Simulation.main(new String[]{"doet niets"});
+            new Thread(() -> {
+                Simulation.main(new String[]{"doet niets"});
+            }).start();
         }
     }
 }
