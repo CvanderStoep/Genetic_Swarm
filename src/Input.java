@@ -27,7 +27,7 @@ public class Input {
         public void actionPerformed(ActionEvent e) {
             inpMazeSize.setText("doet nog niets");
             new Thread(() -> {
-                Simulation.main(new String[]{"doet niets"});
+                Simulation.main(new String[]{"doet niets nuttigs"});
             }).start();
         }
     }
