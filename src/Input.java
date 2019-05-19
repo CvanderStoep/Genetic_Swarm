@@ -28,6 +28,7 @@ public class Input {
     private class RunClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            btnRun.setEnabled(false);
             new Thread(() -> {
                 Simulation.main(new String[]{inpMazeSize.getText(), inpNumberIndividuals.getText(),
                         inpNumberMoves.getText(), inpNumberSimulations.getText()});

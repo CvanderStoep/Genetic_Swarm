@@ -62,7 +62,7 @@ public class Simulation {
             StdOut.println("crossover: ");
             newSimulation.mz.plot(newSimulation.individuals, i);
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

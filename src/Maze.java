@@ -86,8 +86,8 @@ public class Maze {
 
         StdDraw.setPenColor(Color.black);
         String outputText = String.format("fitness: " + "%.2f", individuals.get(0).fitness());
-        StdDraw.text(sizeX, sizeY, outputText);
-        StdDraw.text(sizeX, sizeY+1, String.format("generation: " + "%d", generation));
+        StdDraw.text(sizeX/2, sizeY, outputText);
+        StdDraw.text(sizeX/2, sizeY+1, String.format("generation: " + "%d", generation));
 
         StdDraw.setPenColor(Color.red);
         for (int i = 0; i < sizeX; i++) {
