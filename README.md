@@ -5,4 +5,4 @@ For each individual the fitness (distance to target position) is calculated.
 The fittest (50%) of individual will survive and will reproduce offspring.
 Two parents will reproduce 2 children by crossing genetic codes.
 A random (5%) mutation is added.
-Visual output is given to easily observe the behaviour of the population.
+Visual output is given to easily observe the behaviour of the population over time.
