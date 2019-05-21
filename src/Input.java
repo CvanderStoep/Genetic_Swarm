@@ -6,7 +6,6 @@ public class Input {
     private JTextField inpMazeSize;
     private JButton btnRun;
     private JPanel InputView;
-    private JLabel lblMazeSize;
     private JTextField inpNumberIndividuals;
     private JTextField inpNumberMoves;
     private JTextField inpNumberSimulations;

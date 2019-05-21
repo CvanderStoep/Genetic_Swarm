@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//TODO een echter vector class zoeken??
+//TODO een echte vector class zoeken??
 //ik mis bijvoorbeeld vector.X
 //dat wordt een Point2D!!
 
@@ -29,12 +29,6 @@ public class Individual {
         this.trajectoryOfPositions = new ArrayList<>();
         this.mazeSize = mazesize;
     }
-//    Public Sub New()
-//        Me.Startlocation = New Vector2(0.2 * MazeSize, 0.2 * MazeSize)
-//        Me.Targetlocation = New Vector2(MazeSize - 1, MazeSize - 1)
-//        Me.GeneticCode = New GeneticCode
-//    End Sub
-
 
     public double fitness() {
         return endLocation.distanceTo(targetLocation);
