@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.Vector;
 
 import java.awt.*;
 import java.util.List;
@@ -42,7 +41,6 @@ public class Maze {
     public void plot(List<Individual> individuals, int generation) {
         StdOut.println("plotting...");
 
-
         // read in bounding box and rescale
         double x0 = 0;
         double y0 = 0;
@@ -56,32 +54,35 @@ public class Maze {
 
         StdDraw.setPenRadius(0.0005);
         StdDraw.setPenColor();
-        for (Individual in : individuals) {
 
-            int xCoorStart = (int) in.startLocation.dot(new Vector(1, 0));
-            int yCoordStart = (int) in.startLocation.dot(new Vector(0, 1));
+        for (Individual in : individuals) {
+            int xCoorStart = (int) in.startLocation.getX();
+            int yCoordStart = (int) in.startLocation.getY();
             StdDraw.setPenColor(Color.blue);
             StdDraw.filledCircle(xCoorStart,yCoordStart,0.2);
 
-            for (Vector cp: in.trajectoryOfPositions){
-                int xcp = (int) cp.dot(new Vector(1, 0));
-                int ycp = (int) cp.dot(new Vector(0, 1));
+            // Draw the end location of an individual
+            int xCoorEnd = (int) in.endLocation.getX();
+            int yCoordEnd = (int) in.endLocation.getY();
+            StdDraw.setPenColor(Color.black);
+            StdDraw.filledCircle(xCoorEnd,yCoordEnd,0.2);
+
+            // Draw the target location of an individual
+            int xCoorTarget = (int) in.targetLocation.getX();
+            int yCoordTarget = (int) in.targetLocation.getY();
+            StdDraw.setPenColor(Color.green);
+            StdDraw.filledCircle(xCoorTarget,yCoordTarget,0.2);
+
+
+            // Draw the trajectory of an individual
+            for (Vector2D cp: in.trajectoryOfPositions){
+                int xcp = (int) cp.getX();
+                int ycp = (int) cp.getY();
                 StdDraw.setPenColor(Color.blue);
-//                StdDraw.filledCircle(xcp,ycp,0.1);
                 StdDraw.line(xCoorStart,yCoordStart,xcp,ycp);
                 xCoorStart = xcp;
                 yCoordStart = ycp;
             }
-
-            int xCoorEnd = (int) in.endLocation.dot(new Vector(1, 0));
-            int yCoordEnd = (int) in.endLocation.dot(new Vector(0, 1));
-            StdDraw.setPenColor(Color.black);
-            StdDraw.filledCircle(xCoorEnd,yCoordEnd,0.2);
-
-            int xCoorTarget = (int) in.targetLocation.dot(new Vector(1, 0));
-            int yCoordTarget = (int) in.targetLocation.dot(new Vector(0, 1));
-            StdDraw.setPenColor(Color.green);
-            StdDraw.filledCircle(xCoorTarget,yCoordTarget,0.2);
         }
 
         StdDraw.setPenColor(Color.black);
@@ -94,10 +95,10 @@ public class Maze {
             for (int j = 0; j < sizeY; j++) {
                 if (!this.isOpen(i, j)) {
                     StdDraw.filledCircle(i, j, 0.2);
-//                    StdOut.println(i + " "+ j);
                 }
             }
         }
+
         // display all of the points now
         StdDraw.show();
 

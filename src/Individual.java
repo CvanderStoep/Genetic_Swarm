@@ -1,6 +1,5 @@
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +10,17 @@ import java.util.Random;
 //dat wordt een Point2D!!
 
 public class Individual {
-    Vector startLocation;
-    Point2D sL;
-    Vector endLocation;
-    Vector targetLocation;
+    Vector2D startLocation;
+    Vector2D endLocation;
+    Vector2D targetLocation;
     GeneticCode geneticCode;
-    List<Vector> trajectoryOfPositions;
+    List<Vector2D> trajectoryOfPositions;
     int mazeSize;
 
 
     public Individual(int mazesize) {
-        this.startLocation = new Vector(1,1);
-        this.sL = new Point2D(4, 4);
-        this.targetLocation = new Vector(mazesize-1, mazesize -1);
+        this.startLocation = new Vector2D(1,1);
+        this.targetLocation = new Vector2D(mazesize-1, mazesize -1);
         this.geneticCode = new GeneticCode();
         this.endLocation = this.startLocation;
         this.trajectoryOfPositions = new ArrayList<>();
@@ -39,11 +36,11 @@ public class Individual {
         trajectoryOfPositions.clear();
         trajectoryOfPositions.add(startLocation);
         for (Move mv : geneticCode.moves) {
-            Vector oldEndLocation = endLocation;
+            Vector2D oldEndLocation = endLocation;
             endLocation = endLocation.plus(mv.direction);
 
-            int xCoorEnd = (int) endLocation.dot(new Vector(1, 0));
-            int yCoordEnd = (int) endLocation.dot(new Vector(0, 1));
+            int xCoorEnd = (int) endLocation.getX();
+            int yCoordEnd = (int) endLocation.getY();
 //            Point2D np = new Point2D(0,1);
 //            xCoorEnd = np.x();
 
