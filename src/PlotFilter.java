@@ -1,6 +1,8 @@
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
 
+
+
 /******************************************************************************
  *  Compilation:  javac PlotFilter.java
  *  Execution:    java PlotFilter < input.txt

@@ -1,13 +1,10 @@
-import edu.princeton.cs.algs4.Point2D;
+//import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//TODO een echte vector class zoeken??
-//ik mis bijvoorbeeld vector.X
-//dat wordt een Point2D!!
 
 public class Individual {
     Vector2D startLocation;
@@ -41,8 +38,6 @@ public class Individual {
 
             int xCoorEnd = (int) endLocation.getX();
             int yCoordEnd = (int) endLocation.getY();
-//            Point2D np = new Point2D(0,1);
-//            xCoorEnd = np.x();
 
             if (!mz.isOpen(xCoorEnd, yCoordEnd)) {
                 endLocation = oldEndLocation;
