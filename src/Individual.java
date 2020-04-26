@@ -7,6 +7,7 @@ import java.util.Random;
 
 
 public class Individual {
+    static Random rnd = new Random();
     Vector2D startLocation;
     Vector2D endLocation;
     Vector2D targetLocation;
@@ -48,7 +49,6 @@ public class Individual {
 
     public void randomMutation() {
         GeneticCode mutatedCode = new GeneticCode();
-        Random rnd = new Random();
 
         for (Move mv : geneticCode.moves) {
             int p = rnd.nextInt(100);
@@ -87,7 +87,7 @@ public class Individual {
     }
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Individual newI = new Individual(3);
         GeneticCode ngc = new GeneticCode();
         Maze mz = new Maze(3, 3);

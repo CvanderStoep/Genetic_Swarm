@@ -57,7 +57,7 @@ public class Simulation {
             StdOut.println("generation: " + i);
             StdOut.println("killed 1/2: ");
 //            newSimulation.mz.plot(newSimulation.individuals);
-            newSimulation.CrossOver();
+            newSimulation.crossOver();
             newSimulation.individuals.sort(Comparator.comparing(Individual::fitness));
             StdOut.println("crossover: ");
             newSimulation.mz.plot(newSimulation.individuals, i);
@@ -70,7 +70,7 @@ public class Simulation {
     }
 
 
-    private void CrossOver() {
+    private void crossOver() {
         int nextIndividual = 0;
         Random rnd = new Random();
 
